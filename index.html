@@ -24,7 +24,7 @@
         .item {
             display: flex;
             align-items: center;
-            border-bottom: 1px solid #ff11ff;
+            border-bottom: 1px solid #f1f1f1;
         }
 
         .item:last-child {
@@ -33,6 +33,7 @@
 
         input:checked + p {
             background: #f9f9f9;
+            text-decoration: line-through;
         }
 
         input[type="checkbox"] {
@@ -95,5 +96,35 @@
         </div>
     </div>
 
+    <script>
+        const checkboxes = document.querySelectorAll(`.inbox input[type="checkbox"]`);
+
+        let lastChecked;
+
+        function handleCheck(e) {
+            // check if the user had the shift key down
+            // AND check that the user is checking a box
+            let inBetween = false;
+            if (e.shiftKey && this.checked) {
+                // go ahead and do what we please
+                checkboxes.forEach(checkbox => {
+                    console.log(checkbox);
+                    if (checkbox === this || checkbox === lastChecked) {
+                        inBetween = !inBetween;
+                        console.log('Starting to check them in between!');
+                    }
+
+                    if (inBetween) {
+                        checkbox.checked = true;
+                    }
+                })
+            }
+
+            lastChecked = this;
+        }
+
+        checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
+        // loops through each one to check for the check box
+    </script>
 </body>
 </html>
